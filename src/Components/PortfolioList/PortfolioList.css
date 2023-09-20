@@ -1,0 +1,45 @@
+/* portfolio-list.css */
+
+.portfolio-list-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .portfolio-list-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #3498db;
+  }
+  
+  .portfolio-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .portfolio-list li {
+    margin-bottom: 10px;
+  }
+  
+  .portfolio-list li::before {
+    content: "\2022"; /* Bullet point */
+    color: #3498db;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+  }
+  
+  .portfolio-list li span {
+    font-weight: bold;
+    color: #e74c3c;
+  }
+  
+  .portfolio-list li:hover {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+  }
+  
