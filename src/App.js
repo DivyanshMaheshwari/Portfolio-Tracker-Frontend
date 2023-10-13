@@ -1,5 +1,5 @@
-import React from 'react';
-import PortfolioList from './Components/PortfolioList/PortfolioList';
+import React from "react";
+import PortfolioList from "./Components/PortfolioList/PortfolioList";
 
 const App = () => {
   return (
