@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PortfolioForm from "../PortfolioForm/PortfolioForm";
-import "./PortfolioList.css"; // Import the CSS file
+import "./PortfolioList.css";
+import "font-awesome/css/font-awesome.min.css";
 
 const PortfolioList = () => {
   const [portfolios, setPortfolios] = useState([]);
@@ -16,17 +17,11 @@ const PortfolioList = () => {
       .catch((error) => console.error("Error fetching portfolios: ", error));
   }, []);
 
-  const generateRandomFolio = () => {
-    const folio = Math.floor(100000 + Math.random() * 900000); // Generates a six-digit random number
-    return folio;
-  };
-
-  const addPortfolio = (investmentAmount) => {
-    const folio = generateRandomFolio(); // Generate a unique folio
+  const addPortfolio = (investmentAmount, folioNumber) => {
     axios
       .post("http://localhost:8081/portfolio/create", {
         investmentAmount,
-        folio, // Include the generated folio in the request
+        folioNumber,
       })
       .then((response) => {
         setPortfolios([...portfolios, response.data]);
@@ -34,6 +29,18 @@ const PortfolioList = () => {
       .catch((error) => console.error("Error adding portfolio: ", error));
   };
 
+  const handleDeletePortfolio = (id) => {
+    axios
+      .delete(`http://localhost:8081/portfolio/delete/${id}`)
+      .then(() => {
+        // Update portfolios after deletion
+        const updatedPortfolios = portfolios.filter(
+          (portfolio) => portfolio.portfolio_id !== id
+        );
+        setPortfolios(updatedPortfolios);
+      })
+      .catch((error) => console.error("Error deleting portfolio: ", error));
+  };
   return (
     <div className="portfolio-list-container">
       <h1 className="portfolio-list-title">Portfolio List</h1>
@@ -44,6 +51,11 @@ const PortfolioList = () => {
           <li key={portfolio.portfolio_id}>
             Folio: <span>{portfolio.portfolio_id}</span>, Investment Amount:{" "}
             <span>{portfolio.investmentAmount}</span>
+            <button className="delete-button"
+              onClick={() => handleDeletePortfolio(portfolio.portfolio_id)}
+            >
+                <i className="fas fa-trash"></i>
+            </button>
           </li>
         ))}
       </ul>

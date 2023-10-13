@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import './PortfolioForm.css';
+import React, { useState } from "react";
+import "./PortfolioForm.css";
 
 const PortfolioForm = ({ onAddPortfolio }) => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -11,7 +11,7 @@ const PortfolioForm = ({ onAddPortfolio }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     onAddPortfolio(name);
-    setName('');
+    setName("");
   };
 
   return (
