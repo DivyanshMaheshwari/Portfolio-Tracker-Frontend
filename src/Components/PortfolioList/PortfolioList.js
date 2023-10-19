@@ -4,13 +4,14 @@ import PortfolioForm from "../PortfolioForm/PortfolioForm";
 import "./PortfolioList.css";
 import "font-awesome/css/font-awesome.min.css";
 
+
+const REACT_APP_ENDPOINT = process.env.REACT_APP_ENDPOINT
 const PortfolioList = () => {
   const [portfolios, setPortfolios] = useState([]);
-
-  useEffect(() => {
+ useEffect(() => {
     // Fetch portfolios when the component mounts
     axios
-      .get("http://localhost:8081/portfolio/list")
+      .get(`${REACT_APP_ENDPOINT}/portfolio/list`)
       .then((response) => {
         setPortfolios(response.data);
       })
@@ -19,7 +20,7 @@ const PortfolioList = () => {
 
   const addPortfolio = (investmentAmount, folioNumber) => {
     axios
-      .post("http://localhost:8081/portfolio/create", {
+      .post("{REACT_APP_ENDPOINT}/portfolio/create", {
         investmentAmount,
         folioNumber,
       })
@@ -31,7 +32,7 @@ const PortfolioList = () => {
 
   const handleDeletePortfolio = (id) => {
     axios
-      .delete(`http://localhost:8081/portfolio/delete/${id}`)
+      .delete(`{REACT_APP_ENDPOINT}/portfolio/delete/${id}`)
       .then(() => {
         // Update portfolios after deletion
         const updatedPortfolios = portfolios.filter(

@@ -10,7 +10,7 @@ const PortfolioForm = ({ onAddPortfolio }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onAddPortfolio(name);
+    onAddPortfolio(name); 
     setName("");
   };
 
