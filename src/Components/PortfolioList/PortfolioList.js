@@ -4,14 +4,16 @@ import PortfolioForm from "../PortfolioForm/PortfolioForm";
 import "./PortfolioList.css";
 import "font-awesome/css/font-awesome.min.css";
 
-
-const REACT_APP_ENDPOINT = process.env.REACT_APP_ENDPOINT
+const REACT_APP_ENDPOINT = process.env.REACT_APP_ENDPOINT;
+const useHTTP = process.env.REACT_APP_USE_HTTP === "true"; // Convert to boolean
 const PortfolioList = () => {
   const [portfolios, setPortfolios] = useState([]);
- useEffect(() => {
+  useEffect(() => {
     // Fetch portfolios when the component mounts
     axios
-      .get(`${REACT_APP_ENDPOINT}/portfolio/list`)
+      .get(
+        `${useHTTP ? "http" : "https"}://${REACT_APP_ENDPOINT}/portfolio/list`
+      )
       .then((response) => {
         setPortfolios(response.data);
       })
@@ -52,10 +54,11 @@ const PortfolioList = () => {
           <li key={portfolio.portfolio_id}>
             Folio: <span>{portfolio.portfolio_id}</span>, Investment Amount:{" "}
             <span>{portfolio.investmentAmount}</span>
-            <button className="delete-button"
+            <button
+              className="delete-button"
               onClick={() => handleDeletePortfolio(portfolio.portfolio_id)}
             >
-                <i className="fas fa-trash"></i>
+              <i className="fas fa-trash"></i>
             </button>
           </li>
         ))}
