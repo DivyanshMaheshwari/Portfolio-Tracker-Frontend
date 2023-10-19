@@ -22,7 +22,7 @@ const PortfolioList = () => {
 
   const addPortfolio = (investmentAmount, folioNumber) => {
     axios
-      .post("{REACT_APP_ENDPOINT}/portfolio/create", {
+      .post(`${useHTTP ? "http" : "https"}://{REACT_APP_ENDPOINT}/portfolio/create`, {
         investmentAmount,
         folioNumber,
       })
@@ -34,7 +34,7 @@ const PortfolioList = () => {
 
   const handleDeletePortfolio = (id) => {
     axios
-      .delete(`{REACT_APP_ENDPOINT}/portfolio/delete/${id}`)
+      .delete(`${useHTTP ? "http" : "https"}://{REACT_APP_ENDPOINT}/portfolio/delete/${id}`)
       .then(() => {
         // Update portfolios after deletion
         const updatedPortfolios = portfolios.filter(
