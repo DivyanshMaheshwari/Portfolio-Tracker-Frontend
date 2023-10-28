@@ -4,16 +4,14 @@ import PortfolioForm from "../PortfolioForm/PortfolioForm";
 import "./PortfolioList.css";
 import "font-awesome/css/font-awesome.min.css";
 
-const REACT_APP_ENDPOINT = process.env.REACT_APP_ENDPOINT;
-const useHTTP = process.env.REACT_APP_USE_HTTP === "true"; // Convert to boolean
+
+const REACT_APP_ENDPOINT = process.env.REACT_APP_ENDPOINT
 const PortfolioList = () => {
   const [portfolios, setPortfolios] = useState([]);
-  useEffect(() => {
+ useEffect(() => {
     // Fetch portfolios when the component mounts
     axios
-      .get(
-        `${useHTTP ? "http" : "https"}://${REACT_APP_ENDPOINT}/portfolio/list`
-      )
+      .get(`${REACT_APP_ENDPOINT}/portfolio/list`)
       .then((response) => {
         setPortfolios(response.data);
       })
@@ -22,7 +20,7 @@ const PortfolioList = () => {
 
   const addPortfolio = (investmentAmount, folioNumber) => {
     axios
-      .post(`${useHTTP ? "http" : "https"}://{REACT_APP_ENDPOINT}/portfolio/create`, {
+      .post(`${REACT_APP_ENDPOINT}/portfolio/create`, {
         investmentAmount,
         folioNumber,
       })
@@ -34,7 +32,7 @@ const PortfolioList = () => {
 
   const handleDeletePortfolio = (id) => {
     axios
-      .delete(`${useHTTP ? "http" : "https"}://{REACT_APP_ENDPOINT}/portfolio/delete/${id}`)
+      .delete(`${REACT_APP_ENDPOINT}/portfolio/delete/${id}`)
       .then(() => {
         // Update portfolios after deletion
         const updatedPortfolios = portfolios.filter(
@@ -54,11 +52,10 @@ const PortfolioList = () => {
           <li key={portfolio.portfolio_id}>
             Folio: <span>{portfolio.portfolio_id}</span>, Investment Amount:{" "}
             <span>{portfolio.investmentAmount}</span>
-            <button
-              className="delete-button"
+            <button className="delete-button"
               onClick={() => handleDeletePortfolio(portfolio.portfolio_id)}
             >
-              <i className="fas fa-trash"></i>
+                <i className="fas fa-trash"></i>
             </button>
           </li>
         ))}
