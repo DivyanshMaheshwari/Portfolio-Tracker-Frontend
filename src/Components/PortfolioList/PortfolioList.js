@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PortfolioForm from "../PortfolioForm/PortfolioForm";
+import Login from "../Login/Login"; // Import the Login component
 import "./PortfolioList.css";
 import "font-awesome/css/font-awesome.min.css";
 
-
-const REACT_APP_ENDPOINT = process.env.REACT_APP_ENDPOINT
+const REACT_APP_ENDPOINT = process.env.REACT_APP_ENDPOINT;
 const PortfolioList = () => {
   const [portfolios, setPortfolios] = useState([]);
- useEffect(() => {
-    // Fetch portfolios when the component mounts
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
     axios
       .get(`${REACT_APP_ENDPOINT}/portfolio/list`)
       .then((response) => {
@@ -42,24 +43,31 @@ const PortfolioList = () => {
       })
       .catch((error) => console.error("Error deleting portfolio: ", error));
   };
+
   return (
     <div className="portfolio-list-container">
-      <h1 className="portfolio-list-title">Portfolio List</h1>
-      <PortfolioForm onAddPortfolio={addPortfolio} />
-
-      <ul className="portfolio-list">
-        {portfolios.map((portfolio) => (
-          <li key={portfolio.portfolio_id}>
-            Folio: <span>{portfolio.portfolio_id}</span>, Investment Amount:{" "}
-            <span>{portfolio.investmentAmount}</span>
-            <button className="delete-button"
-              onClick={() => handleDeletePortfolio(portfolio.portfolio_id)}
-            >
-                <i className="fas fa-trash"></i>
-            </button>
-          </li>
-        ))}
-      </ul>
+      {isLoggedIn ? (
+        <div>
+          <h1 className="portfolio-list-title">Portfolio List</h1>
+          <PortfolioForm onAddPortfolio={addPortfolio} />
+          <ul className="portfolio-list">
+            {portfolios.map((portfolio) => (
+              <li key={portfolio.portfolio_id}>
+                Folio: <span>{portfolio.portfolio_id}</span>, Investment Amount:{" "}
+                <span>{portfolio.investmentAmount}</span>
+                <button
+                  className="delete-button"
+                  onClick={() => handleDeletePortfolio(portfolio.portfolio_id)}
+                >
+                  <i className="fas fa-trash"></i>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <Login onLogin={setIsLoggedIn} />
+      )}
     </div>
   );
 };
