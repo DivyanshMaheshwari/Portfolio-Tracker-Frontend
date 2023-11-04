@@ -19,11 +19,11 @@ const PortfolioList = () => {
       .catch((error) => console.error("Error fetching portfolios: ", error));
   }, []);
 
-  const addPortfolio = (investmentAmount, folioNumber) => {
+  const addPortfolio = (investmentAmount, investment_type) => {
     axios
       .post(`${REACT_APP_ENDPOINT}/portfolio/create`, {
         investmentAmount,
-        folioNumber,
+        investment_type,
       })
       .then((response) => {
         setPortfolios([...portfolios, response.data]);
@@ -37,7 +37,7 @@ const PortfolioList = () => {
       .then(() => {
         // Update portfolios after deletion
         const updatedPortfolios = portfolios.filter(
-          (portfolio) => portfolio.portfolio_id !== id
+          (portfolio) => portfolio.investment_id !== id
         );
         setPortfolios(updatedPortfolios);
       })
@@ -49,15 +49,15 @@ const PortfolioList = () => {
       {isLoggedIn ? (
         <div>
           <h1 className="portfolio-list-title">Portfolio List</h1>
-          <PortfolioForm onAddPortfolio={addPortfolio} />
+          <PortfolioForm onAddPortfolio={(data) => addPortfolio(data.investmentAmount,data.investment_type)} />
           <ul className="portfolio-list">
             {portfolios.map((portfolio) => (
-              <li key={portfolio.portfolio_id}>
-                Folio: <span>{portfolio.portfolio_id}</span>, Investment Amount:{" "}
-                <span>{portfolio.investmentAmount}</span>
+              <li key={portfolio.investment_id}>
+                Investment Type : <span>{portfolio.investment_type}</span>,
+                Investment Amount: <span>{portfolio.investmentAmount}</span>
                 <button
                   className="delete-button"
-                  onClick={() => handleDeletePortfolio(portfolio.portfolio_id)}
+                  onClick={() => handleDeletePortfolio(portfolio.investment_id)}
                 >
                   <i className="fas fa-trash"></i>
                 </button>

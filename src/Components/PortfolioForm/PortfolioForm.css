@@ -5,25 +5,34 @@
   margin: 0 auto;
 }
 
-.portfolio-form label {
+/* Style for each form field group (label + input) */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+/* Style for labels */
+.form-group label {
   font-size: 1.2rem;
   color: #3498db;
   margin-bottom: 5px;
 }
 
-.portfolio-form input {
+/* Style for inputs */
+.form-group input {
   padding: 10px;
   border: 2px solid #3498db;
   font-size: 1rem;
-  margin-bottom: 15px;
   transition: border 0.3s ease-in-out;
   width: 100%;
 }
 
-.portfolio-form input:focus {
+.form-group input:focus {
   border: 2px solid #e74c3c;
 }
 
+/* Style for the button */
 .portfolio-form button {
   padding: 10px 20px;
   background: linear-gradient(to right, #e74c3c, #3498db);
@@ -32,6 +41,7 @@
   font-size: 1rem;
   cursor: pointer;
   transition: background 0.3s ease-in-out;
+  width: 100%; /* Make the button full width */
 }
 
 .portfolio-form button:hover {
