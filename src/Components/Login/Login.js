@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./Login.css";
+import { Link, useNavigate } from "react-router-dom";
 
 const REACT_APP_ENDPOINT = process.env.REACT_APP_ENDPOINT;
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); 
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
   const handleErrorResponse = (error) => {
     if (error.response) {
       if (error.response.status === 401) {
@@ -17,6 +20,7 @@ const Login = ({ onLogin }) => {
     }
     return "An error occurred while logging in";
   };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(""); // Clear previous errors
@@ -30,12 +34,12 @@ const Login = ({ onLogin }) => {
         }
       );
       onLogin(true);
-      console.log("Login : " +  response.data)
+      navigate("/portfolio/list");
+      console.log("Login: " + response.data);
     } catch (error) {
       setError(handleErrorResponse(error));
     }
   };
-
   return (
     <div className="login-page">
       <div className="login-container">
@@ -58,6 +62,11 @@ const Login = ({ onLogin }) => {
           {error && <p className="error">{error}</p>}
           <button type="submit">Login</button>
         </form>
+        <div>
+          <p>
+            Don't have an account? <Link to="/Signup">Sign up</Link>
+          </p>
+        </div>
       </div>
     </div>
   );
